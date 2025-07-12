@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -13,5 +14,15 @@ class ModelAccessHistory(models.Model):
     
     @property
     def is_accessible(self):
-        # Logic to determine if the model can be accessed
         return self.attempts_count > 0
+    
+class ChatHistory(models.Model):
+    user_id = models.ForeignKey(User, on_delete=models.PROTECT)
+    user_question = models.TextField()
+    model_response = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    is_parent = models.BooleanField(default=False)
+    parent_chat = models.ForeignKey('self', null=True, blank=True, on_delete=models.PROTECT, related_name='child_chats')
+
+    def __str__(self):
+        return f"Chat by {self.user_id} at {self.timestamp}"

@@ -10,21 +10,14 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
 load_dotenv()
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-cs0ym6rr(!ze874hqrbm)qlvkg@j%_m8$2dd0s%t2o(5%j#3u8')
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
 
-# Application definition - Adding our custom apps and DRF
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -32,18 +25,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    # Third party apps for API functionality
     'rest_framework',
     'corsheaders',
-    
-    # Our custom apps
-    'courage_interface',  # Main app for the computer interface
-    'ai_integration',     # App for handling DeepSeek and Gemini APIs
+    'courage_interface', 
+    'ai_integration',   
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',  # Must be at the top for CORS
+    'corsheaders.middleware.CorsMiddleware',  
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -72,7 +61,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'paranormal_app.wsgi.application'
 
-# Database - Using SQLite for development, easily changeable for production
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -80,7 +68,6 @@ DATABASES = {
     }
 }
 
-# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -96,24 +83,18 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# Internationalization
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'asia/kolkata'
 USE_I18N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Media files for user uploads
+STATIC_ROOT = BASE_DIR / 'staticfile'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Django REST Framework configuration
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
@@ -129,21 +110,12 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20
 }
 
-# CORS settings to allow Next.js frontend to communicate
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Next.js default development server
+    "http://localhost:3000",
     "http://127.0.0.1:3000",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
-# AI API Configuration - Store sensitive keys in environment variables
 DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY')
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
-
-# Custom settings for our Courage computer interface
-COURAGE_SETTINGS = {
-    'MAX_LOGIN_ATTEMPTS': 3,
-    'INSULT_COOLDOWN_SECONDS': 30,
-    'RETRO_THEME_ENABLED': True,
-}
