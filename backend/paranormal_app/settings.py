@@ -14,6 +14,8 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-cs0ym6rr(!ze874hqrbm)qlvkg@j%_m8$2dd0s%t2o(5%j#3u8')
+
 DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '0.0.0.0']
@@ -84,7 +86,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'asia/kolkata'
+TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
@@ -110,12 +112,16 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20
 }
 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+    "http://localhost:3000",  
 ]
 
-CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = [
+    "http://localhost:3000",
+]
 
-DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY')
-GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
+
+DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY',"2343")
+GEMINI_API_KEY = os.getenv('GEMINI_API_KEY',"34334")
