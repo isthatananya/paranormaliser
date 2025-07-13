@@ -128,6 +128,8 @@ if not DEBUG:
     CSRF_COOKIE_SECURE = True
     X_FRAME_OPTIONS = 'DENY'
     SECURE_SSL_REDIRECT = True
+    CSRF_COOKIE_SAMESITE = "Lax"  # or "None" if you want cross-site cookies (but requires Secure)
+    SESSION_COOKIE_SAMESITE = "Lax"
 
 LOGGING = {
     'version': 1,
