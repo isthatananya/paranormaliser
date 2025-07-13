@@ -9,6 +9,3 @@ class LoginAttempt(models.Model):
     was_success = models.BooleanField(default=False)
     retries = models.PositiveIntegerField(default=3)
 
-    def __str__(self):
-        return f"{self.user.username} - {'Success' if self.success else 'Failure'} at {self.timestamp}"
-
