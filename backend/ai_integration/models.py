@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 class ModelAccessHistory(models.Model):
     model_name = models.CharField(max_length=255)
     access_time = models.DateTimeField(auto_now_add=True)
-    accessed_by = models.CharField(max_length=255)
-    attempts_count = models.PositiveIntegerField(default=5)
+    accessed_by = models.ForeignKey(User, on_delete=models.PROTECT)
+    attempts_count = models.PositiveIntegerField(default=50)
 
     def __str__(self):
         return f"{self.model_name} accessed by {self.accessed_by} at {self.access_time}"
