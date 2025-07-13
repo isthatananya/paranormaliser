@@ -17,6 +17,12 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:3000")
 
+# Check if running on Railway
+IS_RAILWAY = os.getenv("RAILWAY") == "true"
+
+# Add Railway domains to allowed hosts if on Railway
+if IS_RAILWAY:
+    ALLOWED_HOSTS.extend(['courage-computer.up.railway.app', '.railway.app'])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -118,17 +124,25 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 20,
 }
 
+# Security settings - handle Railway vs other deployments
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+if IS_RAILWAY:
+    # Railway handles SSL termination, so don't redirect
+    SECURE_SSL_REDIRECT = False
+else:
+    # For other deployments, redirect to HTTPS in production
+    SECURE_SSL_REDIRECT = not DEBUG
+
+# Apply security settings for production
 if not DEBUG:
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     X_FRAME_OPTIONS = 'DENY'
-    SECURE_SSL_REDIRECT = True
-    CSRF_COOKIE_SAMESITE = "Lax"  # or "None" if you want cross-site cookies (but requires Secure)
+    CSRF_COOKIE_SAMESITE = "Lax"
     SESSION_COOKIE_SAMESITE = "Lax"
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
 
 LOGGING = {
     'version': 1,
@@ -152,17 +166,6 @@ LOGGING = {
 DEEPSEEK_API_KEY = os.getenv('DEEPSEEK_API_KEY')
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-SECURE_SSL_REDIRECT = True
-
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-
-CSRF_COOKIE_SAMESITE = 'Lax'
-SESSION_COOKIE_SAMESITE = 'Lax'
-
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [FRONTEND_ORIGIN]
 CSRF_TRUSTED_ORIGINS = [FRONTEND_ORIGIN.replace("http://", "https://")]
-
