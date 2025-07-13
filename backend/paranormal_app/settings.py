@@ -18,8 +18,8 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", "http://localhost:3000")
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [FRONTEND_ORIGIN]
-CSRF_TRUSTED_ORIGINS = [FRONTEND_ORIGIN]
+CORS_ALLOWED_ORIGINS = ["https://paranormaliser-frontend.vercel.app", FRONTEND_ORIGIN]
+CSRF_TRUSTED_ORIGINS = ["https://paranormaliser-frontend.vercel.app", FRONTEND_ORIGIN]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
