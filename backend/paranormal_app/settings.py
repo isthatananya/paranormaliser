@@ -130,6 +130,8 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = True
     CSRF_COOKIE_SAMESITE = "Lax"  # or "None" if you want cross-site cookies (but requires Secure)
     SESSION_COOKIE_SAMESITE = "Lax"
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 
 LOGGING = {
     'version': 1,
