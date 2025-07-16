@@ -9,7 +9,7 @@ from django.middleware.csrf import get_token
 from courage_interface.models import LoginAttempt
 from django.contrib.auth.models import User
 
-@api_view(['POST'])
+@api_view(['GET'])
 @permission_classes([AllowAny])
 @ensure_csrf_cookie 
 def get_csrf_token(request):
